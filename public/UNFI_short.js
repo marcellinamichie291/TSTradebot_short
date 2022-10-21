@@ -17,7 +17,7 @@ const countOrders_1 = require("./operations/countOrders");
 const configReader_1 = require("./utils/configReader");
 const rounder_1 = require("./utils/rounder");
 const telegram_1 = require("./telegram/telegram");
-const { coin, tickerSize, profitPercent } = configReader_1.getConfig("ADA");
+const { coin, tickerSize, profitPercent } = configReader_1.getConfig("UNFI");
 const binance = new connect_1.BinanceGlobal();
 const calc = new calculator_1.Calculator(coin.slice(0, -4));
 const telegram = new telegram_1.TelegaBot();
@@ -32,7 +32,7 @@ const zeroBuy = () => __awaiter(void 0, void 0, void 0, function* () {
         yield binance.marketSell(coin, qty[0]);
         const getPositionInfo = yield binance.getCoinInPositionShort(coin);
         if (getPositionInfo.length) {
-            console.log('Zero sell:', getPositionInfo[0].positionAmt, getPositionInfo[0].symbol);
+            console.log("Zero sell:", getPositionInfo[0].positionAmt, getPositionInfo[0].symbol);
             yield telegram.sendSellMessage(getPositionInfo[0]);
             const limitPrice = rounder_1.roundValue(middlePrices[0] * (1 - (profitPercent[0] - 1)), tickerSize);
             const qty = +getPositionInfo[0].positionAmt * -1;
@@ -43,16 +43,16 @@ const zeroBuy = () => __awaiter(void 0, void 0, void 0, function* () {
                 orderType: balance_1.OrderType.BUY,
                 roundDecimals: 4,
             });
-            console.log('Buy order ZERO:', resultOnBuyOrder);
+            console.log("Buy order ZERO:", resultOnBuyOrder);
             yield telegram.sendPutSellOrder(coin, qty, limitPrice);
         }
         recountedMiddlePrices = yield calc.getAllMiddlePrices(+getPositionInfo[0].entryPrice);
         recountedQty = yield calc.buyQtyCoins(recountedMiddlePrices);
         const allMiddleOrders = countOrders_1.generateMiddleOrders(recountedMiddlePrices, recountedQty, calc.coin, tickerSize, balance_1.OrderType.SELL);
         for (let middleOrder of allMiddleOrders) {
-            console.log('Middle order', middleOrder);
+            console.log("Middle order", middleOrder);
             const result = yield binance.putLimitOrder(middleOrder);
-            console.log('Result on put order:', result);
+            console.log("Result on put order:", result);
             yield telegram.sendPutSellMiddleOrder(middleOrder);
         }
     }
@@ -74,18 +74,18 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             yield zeroBuy();
             return;
         }
-        console.log('Position info: ', {
+        console.log("Position info: ", {
             entryPrice: getPositionInfo[0].entryPrice,
             qty: getPositionInfo[0].positionAmt,
-            pnl: getPositionInfo[0].unRealizedProfit
+            pnl: getPositionInfo[0].unRealizedProfit,
         });
     }
     catch (e) {
-        console.log('Eror in run block on get position', e);
+        console.log("Eror in run block on get position", e);
     }
     try {
         const allExistingOrders = yield binance.getOpenedOrders(coin);
-        console.log('Orders qnt: ', allExistingOrders.length);
+        console.log("Orders qnt: ", allExistingOrders.length);
         switch (allExistingOrders.length) {
             // 5 BUY + 1 SELL (ZERO SELL);
             case 6:
@@ -224,7 +224,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (e) {
-        console.log('Error inside catch blocks or on getting openned orders:', e);
+        console.log("Error inside catch blocks or on getting openned orders:", e);
     }
     //
     // const getPositionInfo = await binance.getCoinInPosition(`${calc.coin}USDT`);
