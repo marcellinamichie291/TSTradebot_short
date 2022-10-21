@@ -13,7 +13,9 @@
     "WAVES_short": "node ./public/WAVES_short",
     "1INCH_short": "node ./public/1INCH_short",
     "DYDX_short": "node ./public/DYDX_short",
-    "XRP_short": "node ./public/XRP_short"
+    "XRP_short": "node ./public/XRP_short",
+    "ADA_short": "node ./public/ADA_short",
+    "UNFI_short": "node ./public/UNFI_short"
   },
   "keywords": [],
   "author": "",
