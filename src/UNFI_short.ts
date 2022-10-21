@@ -338,7 +338,6 @@ const startBot = async () => {
   await timer();
   console.timeEnd("Time one cycle");
   console.log(coin);
-
   startBot();
 };
 
