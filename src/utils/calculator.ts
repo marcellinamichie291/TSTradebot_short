@@ -60,6 +60,3 @@ export class Calculator {
   };
 }
 
-const calc = new Calculator('SUSHI');
-console.log(calc.countWorkingStack());
-console.log(calc.getAllMiddlePrices(1.488));

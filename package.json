@@ -15,7 +15,9 @@
     "DYDX_short": "node ./public/DYDX_short",
     "XRP_short": "node ./public/XRP_short",
     "ADA_short": "node ./public/ADA_short",
-    "UNFI_short": "node ./public/UNFI_short"
+    "UNFI_short": "node ./public/UNFI_short",
+    "COTI_short": "node ./public/COTI_short",
+    "STORJ_short": "node ./public/STORJ_short"
   },
   "keywords": [],
   "author": "",
